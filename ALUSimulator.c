@@ -101,7 +101,7 @@ extern void ALUSimulator( RegisterFile theRegisterFile,
 		}
 		else if (OpCode == 8) {
 			// ADDI
-			theRegisterFile[Rt] = (int32_t)theRegisterFile[Rs] + ImmediateValue;
+			theRegisterFile[Rt] = (int32_t)theRegisterFile[Rs] + (int32_t)(int16_t)ImmediateValue;
 		}
 		else if (OpCode == 9) {
 			// ADDIU
@@ -109,7 +109,7 @@ extern void ALUSimulator( RegisterFile theRegisterFile,
 		}
 		else if (OpCode == 10) {
 			// SLTI
-			if ((int32_t)theRegisterFile[Rs] < ImmediateValue) {
+			if ((int32_t)theRegisterFile[Rs] < (int32_t)(int16_t)ImmediateValue) {
 				theRegisterFile[Rt] = 1;
 			}
 			else {
