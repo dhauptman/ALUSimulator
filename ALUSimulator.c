@@ -3,9 +3,9 @@
 //
 //		Author: 		Dustin Hauptman, Lucas Suchy, Daniel Norman
 //		Organization:	KU/EECS/EECS 645
-//		Date:			2017-04-22 (B70422)
+//		Date:			2017-05-02
 //		Version:		1.0
-//		Description:	This is the test standin for a simple ALU simulator
+//		Description:	This is the a simple ALU simulator
 //		Notes:
 //
 //*****************************************************************************
