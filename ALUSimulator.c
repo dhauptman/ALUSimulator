@@ -1,7 +1,7 @@
 //*****************************************************************************
 //--ALUSimulator.c
 //
-//		Author: 		Gary J. Minden
+//		Author: 		Dustin Hauptman, Lucas Suchy, Daniel Norman
 //		Organization:	KU/EECS/EECS 645
 //		Date:			2017-04-22 (B70422)
 //		Version:		1.0
