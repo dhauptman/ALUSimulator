@@ -1,12 +1,13 @@
 //*****************************************************************************
 //--ALUSimulator.c
 //
-//		Author: 		Dustin Hauptman, Lucas Suchy, Daniel Norman
+//		Author: 			Dustin Hauptman, Lucas Suchy
 //		Organization:	KU/EECS/EECS 645
-//		Date:			2017-05-02
-//		Version:		1.0
-//		Description:	This is the a simple ALU simulator
-//		Notes:
+//		Date:					2017-05-04
+//		Version:			1.0
+//		Description:	This program simulates a simple ALU.
+//		Notes: 				The initial print statements and function parameters
+//									were provided by Dr. Gary Minden.
 //
 //*****************************************************************************
 //
@@ -21,6 +22,9 @@
 #include "RegisterFile_01.h"
 #include "ALUSimulator.h"
 
+//
+// Function simulates an ALU
+//
 extern void ALUSimulator( RegisterFile theRegisterFile,
 	uint32_t OpCode,
 	uint32_t Rs, uint32_t Rt, uint32_t Rd,
@@ -29,57 +33,110 @@ extern void ALUSimulator( RegisterFile theRegisterFile,
 	uint32_t ImmediateValue,
 	uint32_t* Status ) {
 
+		//
+		// Print the inputted OpCode, Rs, Rt, and Rd values
+		//
 		printf( ">>ALU: Opcode: %02X; Rs: %02X; Rt: %02X; Rd: %02X;\n",
 		OpCode,
 		Rs,
 		Rt,
 		Rd );
 
+		//
+		// Print the inputted ShiftAmt, FunctionCode, and the ImmediateValue
+		//
 		printf( ">>>>ALU: ShiftAmt: %02X; FunctionCode: %02X; ImmediateValue: %04X;\n",
 		ShiftAmt,
 		FunctionCode,
 		ImmediateValue );
 
-		if (!OpCode) { // If OpCode = 0x0
+		//
+		// Checks the OpCode value. If it is 0, then it is a register type
+		// instruction and the function code is used to determine which to perform
+		//
+		if (!OpCode) {
+
+			//
+			// Check the value of the provided function code and execute
+			// the proper instruction based on its value
+			//
 			switch (FunctionCode) {
 				case 0:
-				theRegisterFile[Rd] = theRegisterFile[Rt] << ShiftAmt; // SLL/NOOP
+				//
+				// SLL/NOOP MIPS instruction
+				//
+				theRegisterFile[Rd] = theRegisterFile[Rt] << ShiftAmt;
 				break;
 				case 2:
-				theRegisterFile[Rd] = theRegisterFile[Rt] >> ShiftAmt; // SRL
+				//
+				// SRL MIPS instruction
+				//
+				theRegisterFile[Rd] = theRegisterFile[Rt] >> ShiftAmt;
 				break;
 				case 3:
-				theRegisterFile[Rd] = (int32_t)theRegisterFile[Rt] >> ShiftAmt; // SRA
+				//
+				// SRA MIPS instruction
+				//
+				theRegisterFile[Rd] = (int32_t)theRegisterFile[Rt] >> ShiftAmt;
 				break;
 				case 4:
-				theRegisterFile[Rd] = theRegisterFile[Rt] << theRegisterFile[Rs]; // SLLV
+				//
+				// SLLV MIPS instruction
+				//
+				theRegisterFile[Rd] = theRegisterFile[Rt] << theRegisterFile[Rs];
 				break;
 				case 6:
-				theRegisterFile[Rd] = theRegisterFile[Rt] >> theRegisterFile[Rs]; // SRLV
+				//
+				// SRLV MIPS instruction
+				//
+				theRegisterFile[Rd] = theRegisterFile[Rt] >> theRegisterFile[Rs];
 				break;
 				case 32:
-				theRegisterFile[Rd] = (int32_t)theRegisterFile[Rs] + (int32_t)theRegisterFile[Rt]; // ADD
+				//
+				// ADD MIPS instruction
+				//
+				theRegisterFile[Rd] = (int32_t)theRegisterFile[Rs] + (int32_t)theRegisterFile[Rt];
 				break;
 				case 33:
-				theRegisterFile[Rd] = theRegisterFile[Rs] + theRegisterFile[Rt];// ADDU
+				//
+				// ADDU MIPS instruction
+				//
+				theRegisterFile[Rd] = theRegisterFile[Rs] + theRegisterFile[Rt];
 				break;
 				case 34:
-				theRegisterFile[Rd] = (int32_t)theRegisterFile[Rs] - (int32_t)theRegisterFile[Rt];// SUB
+				//
+				// SUB MIPS instruction
+				//
+				theRegisterFile[Rd] = (int32_t)theRegisterFile[Rs] - (int32_t)theRegisterFile[Rt];
 				break;
 				case 35:
-				theRegisterFile[Rd] = theRegisterFile[Rs] - theRegisterFile[Rt];// SUBU
+				//
+				// SUBU MIPS instruction
+				//
+				theRegisterFile[Rd] = theRegisterFile[Rs] - theRegisterFile[Rt];
 				break;
 				case 36:
-				theRegisterFile[Rd] = theRegisterFile[Rs] & theRegisterFile[Rt];// AND
+				//
+				// AND MIPS instruction
+				//
+				theRegisterFile[Rd] = theRegisterFile[Rs] & theRegisterFile[Rt];
 				break;
 				case 37:
-				theRegisterFile[Rd] = theRegisterFile[Rs] | theRegisterFile[Rt];// OR
+				//
+				// OR MIPS instruction
+				//
+				theRegisterFile[Rd] = theRegisterFile[Rs] | theRegisterFile[Rt];
 				break;
 				case 38:
-				theRegisterFile[Rd] = theRegisterFile[Rs] ^ theRegisterFile[Rt];// XOR
+				//
+				// XOR MIPS instruction
+				//
+				theRegisterFile[Rd] = theRegisterFile[Rs] ^ theRegisterFile[Rt];
 				break;
 				case 42:
-				// SLT
+				//
+				// SLT MIPS instruction
+				//
 				if (theRegisterFile[Rs] < theRegisterFile[Rt]) {
 					theRegisterFile[Rd] = 1;
 				}
@@ -88,7 +145,9 @@ extern void ALUSimulator( RegisterFile theRegisterFile,
 				}
 				break;
 				case 43:
-				// SLTU
+				//
+				// SLTU MIPS instruction
+				//
 				if (theRegisterFile[Rs] < theRegisterFile[Rt]) {
 					theRegisterFile[Rd] = 1;
 				}
@@ -96,19 +155,30 @@ extern void ALUSimulator( RegisterFile theRegisterFile,
 					theRegisterFile[Rd] = 0;
 				}
 				break;
+				default:
+				break;
 			}
 
 		}
+
+		//
+		// ADDI MIPS instruction
+		//
 		else if (OpCode == 8) {
-			// ADDI
 			theRegisterFile[Rt] = (int32_t)theRegisterFile[Rs] + (int32_t)(int16_t)ImmediateValue;
 		}
+
+		//
+		// ADDIU MIPS instruction
+		//
 		else if (OpCode == 9) {
-			// ADDIU
 			theRegisterFile[Rt] = theRegisterFile[Rs] + ImmediateValue;
 		}
+
+		//
+		// SLTI MIPS instruction
+		//
 		else if (OpCode == 10) {
-			// SLTI
 			if ((int32_t)theRegisterFile[Rs] < (int32_t)(int16_t)ImmediateValue) {
 				theRegisterFile[Rt] = 1;
 			}
@@ -116,8 +186,11 @@ extern void ALUSimulator( RegisterFile theRegisterFile,
 				theRegisterFile[Rt] = 0;
 			}
 		}
+
+		//
+		//SLTIU MIPS instruction
+		//
 		else if (OpCode == 11) {
-			//SLTIU
 			if (theRegisterFile[Rs] < ImmediateValue) {
 				theRegisterFile[Rt] = 1;
 			}
